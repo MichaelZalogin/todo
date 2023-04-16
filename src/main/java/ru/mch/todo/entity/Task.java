@@ -1,6 +1,7 @@
 package ru.mch.todo.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,8 +11,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@Column(name = "task")
+@Table(name = "task")
 public class Task {
+
+    public Task(String description, boolean done) {
+        this.description = description;
+        this.done = done;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +31,4 @@ public class Task {
 
     @Column(name = "done")
     private boolean done;
-
 }

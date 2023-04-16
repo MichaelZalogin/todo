@@ -1,8 +1,9 @@
 package ru.mch.todo.repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface Store<K, E> {
+public interface CrudRepository<K, E> {
 
     E add(E e);
 
@@ -12,7 +13,5 @@ public interface Store<K, E> {
 
     List<E> findAll();
 
-    List<E> findByName(String key);
-
-    E findById(K id);
+    Optional<E> findById(K id);
 }
