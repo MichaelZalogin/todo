@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.mch.todo.entity.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +23,11 @@ public class TaskRepository implements CrudRepository<Long, Task> {
         try {
             session.beginTransaction();
             session.save(task);
+            session.getTransaction().getStatus();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            System.out.println(e.getMessage());
         } finally {
             session.close();
         }
@@ -39,10 +42,12 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             session.beginTransaction();
             var query = session.createQuery("""
                             UPDATE Task
-                            SET description = :fDescription
+                            SET description = :fDescription,
+                            done = :fDone
                             WHERE id = :fId
                                     """)
                     .setParameter("fDescription", task.getDescription())
+                    .setParameter("fDone", task.isDone())
                     .setParameter("fId", id);
             result = query.executeUpdate() > 0;
             session.getTransaction().commit();
