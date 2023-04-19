@@ -21,58 +21,102 @@
 <body>
 
 <div class="container-fluid p-0">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-light" style="background-color: #e0e0e0;">
         <div class="container">
-            <a class="navbar-brand" href="/">Todo</a>
-            <div class="collapse navbar-collapse">
-                <div class="navbar-nav me-auto">
-                    <a class="nav-item nav-link active" href="/">Главная</a>
-                </div>
+            <a class="navbar-brand" href="">Todo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLight"
+                    aria-controls="navbarLight" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse show" id="navbarLight">
+                <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
             </div>
         </div>
     </nav>
-</div>
 
-<div class="container">
-    <div class="row">
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="table-secondary" >
-            <tr>
-                <th scope="col">Статус</th>
-                <th scope="col">#</th>
-                <th scope="col">Описание</th>
-                <th scope="col">Создано</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="task: ${tasksList}">
-                <td>
+    <p>
+    <div class="container">
+        <div class="row">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Статус</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Создано</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task: ${tasksList}">
+                    <td>
               <span th:if="${task.done}">
                 <i class="bi bi-check-square"></i>
               </span>
-                    <span th:if="${!task.done}">
+                        <span th:if="${!task.done}">
                   <i class="bi bi-square"></i>
               </span>
-                </td>
-                <td th:text="${task.id}"/>
-                <td th:text="${task.description}"/>
-                <td th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}"/>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                    <td th:text="${task.id}"/>
+                    <td><a th:text="${task.description}" th:href="@{/tasks/{taskId}(taskId=${task.id})}"></a></td>
+                    <td th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}"/>
+                </tr>
+                </tbody>
+            </table>
+            </p>
 
-    <div class="col-4"><a class="btn btn-success w-50" th:href="@{/}">Показать текущие</a></div>
+        </div>
+        <div class="row">
+            <div class="col-3"><a class="btn btn-secondary w-100" th:href="@{/tasks/current}">Показать текущие</a></div>
+            <div class="col-3"><a class="btn btn-success w-100" th:href="@{/tasks/completed}">Показать выполненные</a>
+            </div>
+            <div class="col-3"><a class="btn btn-primary w-100" th:href="@{/tasks/create}">Создать</a></div>
+            <div class="col-3"><a class="btn btn-danger w-100" th:href="@{/}">Назад</a></div>
+        </div>
 
-    <div class="mb-3 row">
-        <div class="col-6"></div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/}">Назад</a></div>
-                <div class="col-6"><a class="btn btn-primary w-100" th:href="@{/tasks/create}">Создать</a></div>
+        <p>
+        <div class="row">
+            <div class="col">
+                <div class="collapse multi-collapse show" id="multiCollapse1">
+                    <div class="card card-body">
+                        This is some placeholder content for a horizontal collapse. It's hidden by default and shown
+                        when triggered.
+                    </div>
+                </div>
             </div>
         </div>
+        </p>
+
+        <div class="d-flex justify-content-center">
+            <div class="ratio ratio-16x9 w-50">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="YouTube video"
+                        allowfullscreen=""></iframe>
+            </div>
+        </div>
+
     </div>
-</div>
 </body>
 </html>

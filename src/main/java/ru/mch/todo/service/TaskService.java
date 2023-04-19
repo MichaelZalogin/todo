@@ -14,6 +14,8 @@ public interface TaskService {
 
     List<Task> findAll();
 
+    List<Task> findStatusTasks(boolean status);
+
     Optional<Task> findById(Long id);
 
 }

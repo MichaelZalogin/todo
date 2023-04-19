@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.mch.todo.entity.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -113,5 +114,25 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             session.close();
         }
         return taskOptional;
+    }
+
+    public List<Task> findStatusTasks(boolean status) {
+        var session = sf.openSession();
+        List<Task> itemList = new ArrayList<>();
+        try {
+            session.beginTransaction();
+            Query<Task> query = session.createQuery("""
+                            FROM Task
+                            WHERE done = :fDone
+                             """)
+                    .setParameter("fDone", status);
+            itemList = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return itemList;
     }
 }

@@ -30,4 +30,27 @@ public class TaskController {
         var savedTask = taskServiceImpl.add(task);
         return "redirect:/";
     }
+
+    @GetMapping("/completed")
+    public String getСompletedTasks(Model model) {
+        model.addAttribute("completedList", taskServiceImpl.findStatusTasks(true));
+        return "task/completedList";
+    }
+
+    @GetMapping("/current")
+    public String getCurrentTasks(Model model) {
+        model.addAttribute("currentList", taskServiceImpl.findStatusTasks(false));
+        return "task/currentList";
+    }
+
+    @GetMapping("/{id}")
+    public String getById(Model model, @PathVariable long id) {
+        var taskOptional = taskServiceImpl.findById(id);
+        if (taskOptional.isEmpty()) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        model.addAttribute("task", taskOptional.get());
+        return "task/one";
+    }
 }
