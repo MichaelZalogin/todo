@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.repository.TaskRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -19,13 +20,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public boolean replace(Long id, Task task) {
-        return taskRepository.replace(id, task);
+    public boolean update(Task task) {
+        return taskRepository.update(task);
     }
 
     @Override
-    public boolean delete(Long id) {
-        return taskRepository.delete(id);
+    public boolean deleteById(Long id) {
+        return taskRepository.deleteById(id);
     }
 
     @Override

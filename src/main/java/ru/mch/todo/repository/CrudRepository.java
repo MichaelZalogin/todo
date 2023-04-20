@@ -7,9 +7,9 @@ public interface CrudRepository<K, E> {
 
     E add(E e);
 
-    boolean replace(K id, E e);
+    boolean update(E e);
 
-    boolean delete(K id);
+    boolean deleteById(K id);
 
     List<E> findAll();
 

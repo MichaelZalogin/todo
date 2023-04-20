@@ -1,6 +1,7 @@
 package ru.mch.todo.repository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @AllArgsConstructor
 public class TaskRepository implements CrudRepository<Long, Task> {
@@ -27,7 +29,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-            System.out.println(e.getMessage());
+            log.error("Rollback transaction", e);
         } finally {
             session.close();
         }
@@ -35,7 +37,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
     }
 
     @Override
-    public boolean replace(Long id, Task task) {
+    public boolean update(Task task) {
         var session = sf.openSession();
         boolean result = false;
         try {
@@ -48,11 +50,12 @@ public class TaskRepository implements CrudRepository<Long, Task> {
                                     """)
                     .setParameter("fDescription", task.getDescription())
                     .setParameter("fDone", task.isDone())
-                    .setParameter("fId", id);
+                    .setParameter("fId", task.getId());
             result = query.executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            log.error("Rollback transaction", e);
         } finally {
             session.close();
         }
@@ -60,7 +63,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean deleteById(Long id) {
         var session = sf.openSession();
         boolean result = false;
         try {
@@ -74,6 +77,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            log.error("Rollback transaction", e);
         } finally {
             session.close();
         }
@@ -91,6 +95,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            log.error("Rollback transaction", e);
         } finally {
             session.close();
         }
@@ -110,6 +115,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             taskOptional = query.uniqueResultOptional();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            log.error("Rollback transaction", e);
         } finally {
             session.close();
         }
@@ -130,6 +136,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            log.error("Rollback transaction", e);
         } finally {
             session.close();
         }

@@ -8,9 +8,9 @@ public interface TaskService {
 
     Task add(Task task);
 
-    boolean replace(Long id, Task task);
+    boolean update(Task task);
 
-    boolean delete(Long id);
+    boolean deleteById(Long id);
 
     List<Task> findAll();
 

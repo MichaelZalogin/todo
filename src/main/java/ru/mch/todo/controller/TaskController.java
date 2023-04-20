@@ -32,7 +32,7 @@ public class TaskController {
     }
 
     @GetMapping("/completed")
-    public String getСompletedTasks(Model model) {
+    public String getCompletedTasks(Model model) {
         model.addAttribute("completedList", taskServiceImpl.findStatusTasks(true));
         return "task/completedList";
     }
@@ -52,5 +52,25 @@ public class TaskController {
         }
         model.addAttribute("task", taskOptional.get());
         return "task/one";
+    }
+
+    @PostMapping("/update")
+    public String updateTask(Model model, @ModelAttribute Task task) {
+        var isUpdated = taskServiceImpl.update(task);
+        if (!isUpdated) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable long id) {
+        var isDeleted = taskServiceImpl.deleteById(id);
+        if (!isDeleted) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        return "redirect:/tasks";
     }
 }
