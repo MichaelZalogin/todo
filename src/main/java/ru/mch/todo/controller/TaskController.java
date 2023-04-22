@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.service.TaskService;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -28,7 +29,7 @@ public class TaskController {
     @PostMapping("/create")
     public String createNewTask(@ModelAttribute Task task) {
         var savedTask = taskServiceImpl.add(task);
-        return "redirect:/";
+        return "redirect:/tasks";
     }
 
     @GetMapping("/completed")
@@ -71,6 +72,19 @@ public class TaskController {
             model.addAttribute("message", "Задача с указанным идентификатором не найдена");
             return "errors/404";
         }
+        return "redirect:/tasks";
+    }
+
+    @GetMapping ("/updateStatus/{id}/{status}")
+    public String updateStatus(@PathVariable long id, @PathVariable boolean status, Model model) {
+        Optional<Task> optionalTask = taskServiceImpl.findById(id);
+        if (optionalTask.isEmpty()) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        var task = optionalTask.get();
+        task.setDone(!status);
+        taskServiceImpl.update(task);
         return "redirect:/tasks";
     }
 }

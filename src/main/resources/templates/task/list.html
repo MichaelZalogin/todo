@@ -59,10 +59,17 @@
         </div>
     </nav>
 
+<!--<script>-->
+<!--    $(function(){-->
+<!--        $("#nav-placeholder").load("navbar.html");-->
+<!--    });-->
+<!--</script>-->
+
+<!--<div id="nav-placeholder"></div>-->
     <p>
     <div class="container">
         <div class="row">
-            <table class="table table-bordered table-hover table-striped">
+            <table class="table table-bordered table-hover table-striped" style="text-align: center; vertical-align: middle">
                 <thead class="table-secondary">
                 <tr>
                     <th scope="col">ID</th>
@@ -70,11 +77,10 @@
                     <th scope="col">Created</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
-                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="task: ${tasksList}">
+                <tr th:each="task: ${tasksList}" style="text-align: center">
 
                     <td th:text="${task.id}"/>
 
@@ -93,10 +99,10 @@
 
                     <td>
               <span th:if="${task.done}">
-                        <a class="btn btn-danger w-80" th:href="@{/tasks/current}">Показать</a>
+                        <a class="btn btn-danger w-50" th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${task.done})}">Возобновить</a>
                         </span>
                         <span th:if="${!task.done}">
-                  <a class="btn btn-success w-80" th:href="@{/tasks/current}">Текущие</a>
+                  <a class="btn btn-success w-50" th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${task.done})}">Выполнить</a>
               </span>
                     </td>
 
@@ -135,5 +141,6 @@
 <!--        </div>-->
 
     </div>
+</div>
 </body>
 </html>
