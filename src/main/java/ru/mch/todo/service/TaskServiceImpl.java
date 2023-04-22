@@ -43,4 +43,9 @@ public class TaskServiceImpl implements TaskService {
     public Optional<Task> findById(Long id) {
         return taskRepository.findById(id);
     }
+
+    @Override
+    public boolean updateStatus(Long id, boolean status) {
+        return taskRepository.updateStatus(id, status);
+    }
 }

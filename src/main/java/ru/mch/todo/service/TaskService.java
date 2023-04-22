@@ -18,4 +18,6 @@ public interface TaskService {
 
     Optional<Task> findById(Long id);
 
+    boolean updateStatus(Long id, boolean status);
+
 }

@@ -142,4 +142,27 @@ public class TaskRepository implements CrudRepository<Long, Task> {
         }
         return itemList;
     }
+
+    public boolean updateStatus(long id, boolean status) {
+        var session = sf.openSession();
+        boolean result = false;
+        try {
+            session.beginTransaction();
+            var query = session.createQuery("""
+                            UPDATE Task
+                            SET done = :fDone
+                            WHERE id = :fId
+                                    """)
+                    .setParameter("fDone", status)
+                    .setParameter("fId", id);
+            result = query.executeUpdate() > 0;
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            log.error("Rollback transaction", e);
+        } finally {
+            session.close();
+        }
+        return result;
+    }
 }

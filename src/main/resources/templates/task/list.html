@@ -99,10 +99,10 @@
 
                     <td>
               <span th:if="${task.done}">
-                        <a class="btn btn-danger w-50" th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${task.done})}">Возобновить</a>
+                        <a class="btn btn-danger w-50" th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${!task.done})}">Возобновить</a>
                         </span>
                         <span th:if="${!task.done}">
-                  <a class="btn btn-success w-50" th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${task.done})}">Выполнить</a>
+                  <a class="btn btn-success w-50" th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${!task.done})}">Выполнить</a>
               </span>
                     </td>
 
