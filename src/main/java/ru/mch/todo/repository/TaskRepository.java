@@ -90,7 +90,7 @@ public class TaskRepository implements CrudRepository<Long, Task> {
         List<Task> itemList = new ArrayList<>();
         try {
             session.beginTransaction();
-            Query<Task> query = session.createQuery("FROM Task");
+            Query<Task> query = session.createQuery("FROM Task ORDER BY created");
             itemList = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.service.TaskService;
 
-import java.util.Optional;
-
 @Controller
 @AllArgsConstructor
 @RequestMapping("/tasks")
