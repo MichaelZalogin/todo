@@ -27,9 +27,4 @@ public class TaskResource {
     public boolean editTask(@RequestBody Task task) {
         return taskServiceImpl.update(task);
     }
-
-    @GetMapping("/delete/{id}")
-    public boolean delete(@PathVariable long id) {
-        return taskServiceImpl.deleteById(id);
-    }
 }

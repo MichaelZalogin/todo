@@ -34,10 +34,10 @@
             <div class="collapse navbar-collapse show" id="navbarLight">
                 <ul class="navbar-nav me-auto mb-2 mb-xl-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" th:href="@{/tasks/create}">Создать задачу</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -118,15 +118,8 @@
                 </tbody>
             </table>
             </p>
-
-        </div>
-        <div class="row">
-            </div>
-            <div class="col-12"><a class="btn btn-primary w-100" th:href="@{/tasks/create}">Создать</a></div>
-            <div class="col-12"><a class="btn btn-danger w-100" th:href="@{/}">Назад</a></div>
         </div>
 
-        <p>
         <div class="row">
             <div class="col">
                 <div class="collapse multi-collapse show" id="multiCollapse1">
@@ -137,7 +130,6 @@
                 </div>
             </div>
         </div>
-        </p>
 
         <div class="modal fade" id="taskEditDialog" tabindex="-1" role="dialog" aria-labelledby="taskEditDialogLabel"
              aria-hidden="true">
@@ -145,37 +137,36 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="taskEditDialogLabel">Edit task</h5>
-                        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" id="close-modal1">
+                        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"
+                                id="close-modal1">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
                     <div class="modal-body">
                         <form>
                             <input type="hidden" id="task-id">
-
                             <div class="form-group">
                                 <label for="task-name" class="col-form-label">Name</label>
                                 <input type="text" class="form-control" id="task-name">
                             </div>
-
                             <div class="form-group">
                                 <label for="task-description" class="col-form-label">Description</label>
                                 <textarea class="form-control" id="task-description" name="task-description" rows="12"
                                           placeholder="Опишите задачу"></textarea>
                             </div>
-
                         </form>
                     </div>
-
                     <div class="modal-footer">
-                        <button id="close-modal2" type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
+                        <button id="close-modal2" type="button" class="btn btn-secondary close-modal"
+                                data-dismiss="modal">Close
+                        </button>
                         <button id="delete-task-button" type="button" class="btn btn-danger">Delete</button>
                         <button id="save-task-button" type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <script>
             $('#taskEditDialog').on('shown.bs.modal', function (event) {
@@ -198,7 +189,7 @@
                 }
             })
 
-            $('#save-task-button').click(function() {
+            $('#save-task-button').click(function () {
                 let modal = $('#taskEditDialog')
                 let task = {
                     name: modal.find('#task-name').val(),
@@ -223,12 +214,12 @@
                 modal.modal('hide');
             });
 
-            $('#delete-task-button').click(function() {
+            $('#delete-task-button').click(function () {
                 let modal = $('#taskEditDialog');
                 let taskId = modal.find('#task-id').val();
 
                 $.ajax({
-                    url: '/api/v1/task/delete/' + taskId,
+                    url: '/tasks/delete/' + taskId,
                     type: 'GET',
                     success: () => {
                         location.reload();
@@ -240,7 +231,7 @@
                 modal.modal('hide');
             });
 
-            $('.close-modal').click(function() {
+            $('.close-modal').click(function () {
                 let modal = $('#taskEditDialog');
                 modal.modal('hide');
             });
@@ -252,8 +243,6 @@
         <!--                        allowfullscreen=""></iframe>-->
         <!--            </div>-->
         <!--        </div>-->
-
     </div>
-</div>
 </body>
 </html>
