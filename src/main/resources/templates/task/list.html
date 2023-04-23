@@ -23,7 +23,6 @@
 
 </head>
 <body>
-
 <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-xl navbar-light" style="background-color: #e0e0e0;">
         <div class="container">
@@ -172,7 +171,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button id="delete-task-button" type="button" class="btn btn-danger">Delete</button>
                         <button id="save-task-button" type="button" class="btn btn-primary">Save</button>
                     </div>
@@ -180,10 +179,7 @@
             </div>
         </div>
 
-
-
         <script>
-
             $('#taskEditDialog').on('shown.bs.modal', function (event) {
                 let button = $(event.relatedTarget) // Button that triggered the modal
                 let taskId = button.data('taskid') // Extract info from data-* attributes
@@ -226,22 +222,30 @@
                         alert(err);
                     }
                 })
-                modal.hide();
+                modal.modal('hide');
             });
 
-            $('#delete-task-button').on('click', function (event) {
-                let taskId = $(this).data('taskid');
-                if (taskId) {
-                    $.ajax({
-                        url: '/api/v1/task/delete/' + taskId,
-                        type: 'GET',
-                        success: function(result) {
-                            location.reload();
-                        }
-                    });
-                }
+            $('#delete-task-button').click(function() {
+                let modal = $('#taskEditDialog');
+                let taskId = modal.find('#task-id').val();
+
+                $.ajax({
+                    url: '/api/v1/task/delete/' + taskId,
+                    type: 'GET',
+                    success: () => {
+                        location.reload();
+                    },
+                    error: (err) => {
+                        alert(err);
+                    }
+                });
+                modal.modal('hide');
             });
 
+            $('#close-modal').click(function() {
+                let modal = $('#taskEditDialog');
+                modal.modal('hide');
+            });
         </script>
 
         <!--        <div class="d-flex justify-content-center">-->

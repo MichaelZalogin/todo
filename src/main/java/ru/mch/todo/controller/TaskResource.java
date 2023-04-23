@@ -1,7 +1,6 @@
 package ru.mch.todo.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.mch.todo.config.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
