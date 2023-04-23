@@ -42,16 +42,16 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown link
+                            Отобразить
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Все задачи</a></li>
+                            <li><a class="dropdown-item" th:href="@{/tasks/current}">Текущие задачи</a></li>
+                            <li><a class="dropdown-item" th:href="@{/tasks/completed}">Выполненые задачи</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Version 1.1</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -121,11 +121,9 @@
 
         </div>
         <div class="row">
-            <div class="col-3"><a class="btn btn-secondary w-100" th:href="@{/tasks/current}">Показать текущие</a></div>
-            <div class="col-3"><a class="btn btn-success w-100" th:href="@{/tasks/completed}">Показать выполненные</a>
             </div>
-            <div class="col-3"><a class="btn btn-primary w-100" th:href="@{/tasks/create}">Создать</a></div>
-            <div class="col-3"><a class="btn btn-danger w-100" th:href="@{/}">Назад</a></div>
+            <div class="col-12"><a class="btn btn-primary w-100" th:href="@{/tasks/create}">Создать</a></div>
+            <div class="col-12"><a class="btn btn-danger w-100" th:href="@{/}">Назад</a></div>
         </div>
 
         <p>
@@ -147,7 +145,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="taskEditDialogLabel">Edit task</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" id="close-modal1">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -171,7 +169,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="close-modal2" type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
                         <button id="delete-task-button" type="button" class="btn btn-danger">Delete</button>
                         <button id="save-task-button" type="button" class="btn btn-primary">Save</button>
                     </div>
@@ -242,7 +240,7 @@
                 modal.modal('hide');
             });
 
-            $('#close-modal').click(function() {
+            $('.close-modal').click(function() {
                 let modal = $('#taskEditDialog');
                 modal.modal('hide');
             });
