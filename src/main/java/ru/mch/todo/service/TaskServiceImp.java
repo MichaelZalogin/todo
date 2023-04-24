@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class TaskServiceImpl implements TaskService {
+public class TaskServiceImp implements TaskService {
 
     private TaskRepository taskRepository;
 
