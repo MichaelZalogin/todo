@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
 
     <!--  Зависимости Bootstrap-->
@@ -20,13 +20,14 @@
             crossorigin="anonymous"></script>
 
     <title>Todo List</title>
-
 </head>
 <body>
 <div class="container-fluid p-0">
+
+    <!--    Навигация-->
     <nav class="navbar navbar-expand-xl navbar-light" style="background-color: #e0e0e0;">
         <div class="container">
-            <a class="navbar-brand" href="">Todo</a>
+            <a class="navbar-brand" th:href="@{/}">Todo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLight"
                     aria-controls="navbarLight" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -51,7 +52,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Version 1.1</a>
+                        <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Version 1.1</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -61,34 +62,25 @@
             </div>
         </div>
     </nav>
-
-    <!--    <script>-->
-    <!--        $(function () {-->
-    <!--            $("#nav-placeholder").load("navbar.html");-->
-    <!--        });-->
-    <!--    </script>-->
-
-    <!--    <div id="nav-placeholder"></div>-->
-
     <p>
+
     <div class="container">
         <div class="row">
-            <table class="table table-bordered table-hover table-striped"
-                   style="text-align: center; vertical-align: middle">
+            <table class="table table-bordered table-hover table-striped">
                 <thead class="table-secondary">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="col-id">ID</th>
+                    <th scope="col" class="col-name">Name</th>
+                    <th scope="col" class="col-created">Created</th>
+                    <th scope="col" class="col-status">Status</th>
+                    <th scope="col" class="col-action">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="task: ${tasksList}" style="text-align: center">
 
                     <td th:text="${task.id}"/>
-                    <td style="text-align: left" th:text="${task.name}">
+                    <td th:text="${task.name}">
                     <td th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}"/>
 
                     <td>
@@ -166,83 +158,82 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <script>
+        $('#taskEditDialog').on('shown.bs.modal', function (event) {
+            let button = $(event.relatedTarget) // Button that triggered the modal
+            let taskId = button.data('taskid') // Extract info from data-* attributes
 
-        <script>
-            $('#taskEditDialog').on('shown.bs.modal', function (event) {
-                let button = $(event.relatedTarget) // Button that triggered the modal
-                let taskId = button.data('taskid') // Extract info from data-* attributes
-
-                if (taskId) {
-                    $.get({
-                        url: '/api/v1/task/' + taskId,
-                        success: (data) => {
-                            let modal = $(this)
-                            modal.find('#task-id').val(data.id)
-                            modal.find('#task-name').val(data.name)
-                            modal.find('#task-description').val(data.description)
-                        },
-                        error: (err) => {
-                            alert(err);
-                        }
-                    });
-                }
-            })
-
-            $('#save-task-button').click(function () {
-                let modal = $('#taskEditDialog')
-                let task = {
-                    name: modal.find('#task-name').val(),
-                    description: modal.find('#task-description').val(),
-                };
-                if (modal.find('#task-id').val()) {
-                    task.id = modal.find('#task-id').val()
-                }
-                $.ajax({
-                    url: '/api/v1/task',
-                    type: 'POST',
-                    data: JSON.stringify(task),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: () => {
-                        location.reload()
-                    },
-                    error: (err) => {
-                        alert(err);
-                    }
-                })
-                modal.modal('hide');
-            });
-
-            $('#delete-task-button').click(function () {
-                let modal = $('#taskEditDialog');
-                let taskId = modal.find('#task-id').val();
-
-                $.ajax({
-                    url: '/tasks/delete/' + taskId,
-                    type: 'GET',
-                    success: () => {
-                        location.reload();
+            if (taskId) {
+                $.get({
+                    url: '/tasks/' + taskId,
+                    success: (data) => {
+                        let modal = $(this)
+                        modal.find('#task-id').val(data.id)
+                        modal.find('#task-name').val(data.name)
+                        modal.find('#task-description').val(data.description)
                     },
                     error: (err) => {
                         alert(err);
                     }
                 });
-                modal.modal('hide');
-            });
+            }
+        })
 
-            $('.close-modal').click(function () {
-                let modal = $('#taskEditDialog');
-                modal.modal('hide');
+        $('#delete-task-button').on('click', function () {
+            let modal = $('#taskEditDialog');
+            let taskId = modal.find('#task-id').val();
+            $.get({
+                url: 'tasks/delete/' + taskId,
+                success: () => {
+                    location.reload();
+                },
+                error: (err) => {
+                    alert(err);
+                }
             });
-        </script>
+            modal.modal('hide');
+        });
 
-        <!--        <div class="d-flex justify-content-center">-->
-        <!--            <div class="ratio ratio-16x9 w-50">-->
-        <!--                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="YouTube video"-->
-        <!--                        allowfullscreen=""></iframe>-->
-        <!--            </div>-->
-        <!--        </div>-->
-    </div>
+        $('#save-task-button').on('click', function () {
+            let modal = $('#taskEditDialog')
+            let task = {
+                name: modal.find('#task-name').val(),
+                description: modal.find('#task-description').val(),
+            };
+            if (modal.find('#task-id').val()) {
+                task.id = modal.find('#task-id').val()
+            }
+            $.ajax({
+                url: '/tasks/update',
+                type: 'POST',
+                data: JSON.stringify(task),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: () => {
+                    location.reload();
+                },
+                error: (err) => {
+                    location.reload();
+                }
+            })
+            modal.modal('hide');
+        });
+
+        $('.close-modal').click(function () {
+            let modal = $('#taskEditDialog');
+            modal.modal('hide');
+        });
+    </script>
+
+    <!--        <div class="d-flex justify-content-center">-->
+    <!--            <div class="ratio ratio-16x9 w-50">-->
+    <!--                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="YouTube video"-->
+    <!--                        allowfullscreen=""></iframe>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+</div>
 </body>
 </html>

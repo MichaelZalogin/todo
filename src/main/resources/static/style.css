@@ -1,0 +1,24 @@
+table {
+   text-align: center;
+   vertical-align: middle;
+}
+
+.col-id {
+   width: 100px;
+}
+
+.col-name {
+   width: 550px;
+}
+
+.col-created {
+   width: 300px;
+}
+
+.col-status {
+   width: 100px;
+}
+
+.col-action {
+   width: 350px;
+}

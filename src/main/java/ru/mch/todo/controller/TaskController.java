@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.mch.todo.config.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.service.TaskService;
 
@@ -44,29 +45,21 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable long id) {
-        var taskOptional = taskServiceImpl.findById(id);
-        if (taskOptional.isEmpty()) {
-            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
-            return "errors/404";
-        }
-        model.addAttribute("task", taskOptional.get());
-        return "task/one";
+    @ResponseBody
+    public Task getById(@PathVariable long id, Model model) {
+        return taskServiceImpl.findById(id).orElseThrow(() -> new NotFoundException("Error"));
     }
 
     @PostMapping("/update")
-    public String updateTask(Model model, @ModelAttribute Task task) {
-        var isUpdated = taskServiceImpl.update(task);
-        if (!isUpdated) {
-            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
-            return "errors/404";
-        }
+    public String updateTask(@RequestBody Task task) {
+        taskServiceImpl.update(task);
         return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{id}")
-    public boolean delete(@PathVariable long id) {
-        return taskServiceImpl.deleteById(id);
+    public String delete(@PathVariable long id) {
+        taskServiceImpl.deleteById(id);
+        return "redirect:/tasks";
     }
 
     @GetMapping("/updateStatus/{id}/{status}")
