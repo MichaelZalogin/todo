@@ -108,9 +108,9 @@ public class TaskRepository implements CrudRepository<Long, Task> {
         Optional<Task> taskOptional = Optional.empty();
         try {
             Query<Task> query = session.createQuery("""
-                            FROM Task 
+                            FROM Task
                             WHERE id = :fId
-                            """)
+                            """, Task.class)
                     .setParameter("fId", id);
             taskOptional = query.uniqueResultOptional();
         } catch (Exception e) {
