@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.mch.todo.entity.User;
 import ru.mch.todo.service.UserServiceImp;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @AllArgsConstructor
 @Controller
@@ -27,9 +29,32 @@ public class UserController {
     public String registerUser(@ModelAttribute User user, Model model) {
         var savedUser = userServiceImp.add(user);
         if (savedUser.isEmpty()) {
-            model.addAttribute("message", "Ошибка создания пользователя");
+            model.addAttribute("message", "Такой пользователь уже существует");
             return "errors/404";
         }
-        return "redirect:/register";
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "user/login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@ModelAttribute User user, Model model, HttpServletRequest request) {
+        var userOptional = userServiceImp.findByLoginAndPassword(user.getLogin(), user.getPassword());
+        if (userOptional.isEmpty()) {
+            model.addAttribute("error", "Почта или пароль введены неверно");
+            return "user/login";
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("user", userOptional.get());
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/users/login";
     }
 }
