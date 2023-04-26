@@ -1,4 +1,4 @@
-package ru.mch.todo.config.exceptions;
+package ru.mch.todo.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

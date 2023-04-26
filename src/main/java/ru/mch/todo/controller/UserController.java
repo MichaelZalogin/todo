@@ -19,7 +19,6 @@ public class UserController {
 
     private UserServiceImp userServiceImp;
 
-    // TODO: 25.04.2023 Поправить задвоенный запрос hibernate после сохранения с модального окна
     @GetMapping("/register")
     public String getRegistrationPage() {
         return "user/register";

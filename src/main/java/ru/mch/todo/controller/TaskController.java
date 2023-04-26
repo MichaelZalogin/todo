@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.mch.todo.config.exceptions.NotFoundException;
+import ru.mch.todo.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.entity.User;
 import ru.mch.todo.service.TaskService;
-
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,14 +18,8 @@ public class TaskController {
     private TaskService taskServiceImpl;
 
     @GetMapping()
-    public String getAll(Model model, HttpSession session) {
+    public String getAll(Model model) {
         model.addAttribute("tasksList", taskServiceImpl.findAll());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
         return "task/list";
     }
 
@@ -36,14 +29,8 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String createNewTask(@ModelAttribute Task task, HttpSession session, Model model) {
+    public String createNewTask(@ModelAttribute Task task) {
         var savedTask = taskServiceImpl.add(task);
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
         return "redirect:/tasks";
     }
 
