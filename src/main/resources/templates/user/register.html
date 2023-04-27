@@ -22,13 +22,13 @@
             integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
             crossorigin="anonymous"></script>
 
-    <title>Все задачи</title>
+    <title>Регистрация</title>
 </head>
 <body>
 <div class="container-fluid p-0">
 
     <!--    Навигация-->
-    <nav class="navbar navbar-expand-xl navbar-light">
+    <nav class="navbar navbar-expand-xl navbar-light" style="background-color: #e0e0e0">
         <div class="container">
             <a class="navbar-brand" th:href="@{/}">Todo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLight"
@@ -60,7 +60,7 @@
 
                 </ul>
                 <form class="d-flex ms-auto mx-2">
-                    <input class="form-control me-3 search-input" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-3 search-input" type="search" placeholder="Search" aria-label="Search" style="width: 350px">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 <div class="d-flex" th:if="${user.name == 'Гость'}">
