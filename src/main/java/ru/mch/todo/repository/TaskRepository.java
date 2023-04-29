@@ -2,167 +2,99 @@ package ru.mch.todo.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.mch.todo.entity.Task;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 @Repository
 @AllArgsConstructor
-public class TaskRepository implements CrudRepository<Long, Task> {
+public class TaskRepository {
 
-    private final SessionFactory sf;
+    private CrudRepository crudRepository;
 
-    @Override
+    /**
+     * Сохранить в базе.
+     *
+     * @param task задача.
+     * @return задача с установленныым id.
+     */
     public Task add(Task task) {
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            session.save(task);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
+        crudRepository.run(session -> session.persist(task));
         return task;
     }
 
-    @Override
-    public boolean update(Task task) {
-        var session = sf.openSession();
-        boolean result = false;
-        try {
-            session.beginTransaction();
-            var query = session.createQuery("""
-                            UPDATE Task
-                            SET name = :fName,
-                            description = :fDescription,
-                            done = :fDone
-                            WHERE id = :fId
-                                    """)
-                    .setParameter("fName", task.getName())
-                    .setParameter("fDescription", task.getDescription())
-                    .setParameter("fDone", task.isDone())
-                    .setParameter("fId", task.getId());
-            result = query.executeUpdate() > 0;
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
-        return result;
+    /**
+     * Обновить имя и описание задачу.
+     *
+     * @param task задача.
+     */
+    public void update(Task task) {
+        crudRepository.run(
+                "UPDATE Task SET name = :fName, description = :fDescription WHERE id = :fId",
+                Map.of("fName", task.getName(), "fDescription", task.getDescription(), "fId", task.getId())
+        );
     }
 
-    @Override
-    public boolean deleteById(Long id) {
-        var session = sf.openSession();
-        boolean result = false;
-        try {
-            session.beginTransaction();
-            var query = session.createQuery("""
-                            DELETE Task
-                            WHERE id = :fId
-                                    """)
-                    .setParameter("fId", id);
-            result = query.executeUpdate() > 0;
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
-        return result;
+    /**
+     * Удалить задачу по id.
+     *
+     * @param id задачи.
+     */
+    public void deleteById(Long id) {
+        crudRepository.run(
+                "DELETE Task WHERE id = :fId",
+                Map.of("fId", id)
+        );
     }
 
-    @Override
-    public List<Task> findAll() {
-        var session = sf.openSession();
-        List<Task> itemList = new ArrayList<>();
-        try {
-            session.beginTransaction();
-            Query<Task> query = session.createQuery("FROM Task ORDER BY created");
-            itemList = query.list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
-        return itemList;
+    /**
+     * Полный cписок задач отсортированных по id.
+     *
+     * @return список задач.
+     */
+    public List<Task> findAllOrderById() {
+        return crudRepository.query("FROM Task ORDER BY id asc",
+                Task.class);
     }
 
-    @Override
+    /**
+     * Найти задачу по id.
+     *
+     * @return задача.
+     */
     public Optional<Task> findById(Long id) {
-        Session session = sf.openSession();
-        Optional<Task> taskOptional = Optional.empty();
-        try {
-            Query<Task> query = session.createQuery("""
-                            FROM Task
-                            WHERE id = :fId
-                            """, Task.class)
-                    .setParameter("fId", id);
-            taskOptional = query.uniqueResultOptional();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
-        return taskOptional;
+        return crudRepository.optional(
+                "FROM Task WHERE id = :fId", Task.class,
+                Map.of("fId", id)
+        );
     }
 
+    /**
+     * Список задач по статусу выполнения.
+     *
+     * @param status статус задачи.
+     * @return список задач.
+     */
     public List<Task> findStatusTasks(boolean status) {
-        var session = sf.openSession();
-        List<Task> itemList = new ArrayList<>();
-        try {
-            session.beginTransaction();
-            Query<Task> query = session.createQuery("""
-                            FROM Task
-                            WHERE done = :fDone
-                             """)
-                    .setParameter("fDone", status);
-            itemList = query.list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
-        return itemList;
+        return crudRepository.query(
+                "FROM Task WHERE done = :fDone", Task.class,
+                Map.of("fDone", status)
+        );
     }
 
-    public boolean updateStatus(long id, boolean status) {
-        var session = sf.openSession();
-        boolean result = false;
-        try {
-            session.beginTransaction();
-            var query = session.createQuery("""
-                            UPDATE Task
-                            SET done = :fDone
-                            WHERE id = :fId
-                                    """)
-                    .setParameter("fDone", status)
-                    .setParameter("fId", id);
-            result = query.executeUpdate() > 0;
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-            log.error("Rollback transaction", e);
-        } finally {
-            session.close();
-        }
-        return result;
+    /**
+     * Обновить статус у задачи.
+     *
+     * @param status статус задачи.
+     * @param id     задачи.
+     */
+    public void updateStatus(Long id, boolean status) {
+        crudRepository.run(
+                "UPDATE Task SET done = :fDone WHERE id = :fId",
+                Map.of("fDone", status, "fId", id)
+        );
     }
 }

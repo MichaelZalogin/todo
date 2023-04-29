@@ -20,18 +20,18 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public boolean update(Task task) {
-        return taskRepository.update(task);
+    public void update(Task task) {
+        taskRepository.update(task);
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return taskRepository.deleteById(id);
+    public void deleteById(Long id) {
+        taskRepository.deleteById(id);
     }
 
     @Override
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<Task> findAllOrderById() {
+        return taskRepository.findAllOrderById();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public boolean updateStatus(Long id, boolean status) {
-        return taskRepository.updateStatus(id, status);
+    public void updateStatus(Long id, boolean status) {
+        taskRepository.updateStatus(id, status);
     }
 }

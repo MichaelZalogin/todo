@@ -87,6 +87,7 @@
                     <th scope="col" class="col-name">Name</th>
                     <th scope="col" class="col-created">Created</th>
                     <th scope="col" class="col-status">Status</th>
+                    <th scope="col" class="col-author">Author</th>
                     <th scope="col" class="col-action">Action</th>
                 </tr>
                 </thead>
@@ -105,7 +106,7 @@
                   <i class="bi bi-square"></i>
               </span>
                     </td>
-
+                    <td th:text="${task.user.name}">
                     <td>
               <span th:if="${task.done}">
                         <a class="btn btn-danger w-50"

@@ -8,16 +8,15 @@ public interface TaskService {
 
     Task add(Task task);
 
-    boolean update(Task task);
+    void update(Task task);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 
-    List<Task> findAll();
+    List<Task> findAllOrderById();
 
     List<Task> findStatusTasks(boolean status);
 
     Optional<Task> findById(Long id);
 
-    boolean updateStatus(Long id, boolean status);
-
+    void updateStatus(Long id, boolean status);
 }

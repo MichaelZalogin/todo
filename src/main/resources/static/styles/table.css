@@ -1,25 +1,29 @@
 
-table {
+.table-bordered {
     text-align: center;
     vertical-align: middle;
 }
 
 .col-id {
-    width: 100px;
+    width: 50px;
 }
 
 .col-name {
-    width: 550px;
-}
-
-.col-created {
     width: 300px;
 }
 
+.col-created {
+    width: 180px;
+}
+
 .col-status {
-    width: 100px;
+    width: 70px;
+}
+
+.col-author {
+    width: 150px;
 }
 
 .col-action {
-    width: 350px;
+    width: 230px;
 }

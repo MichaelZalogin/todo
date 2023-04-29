@@ -29,4 +29,7 @@ public class Task {
     @Column(name = "done")
     private boolean done;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

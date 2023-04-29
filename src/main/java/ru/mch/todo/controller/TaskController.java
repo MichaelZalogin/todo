@@ -8,6 +8,7 @@ import ru.mch.todo.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.entity.User;
 import ru.mch.todo.service.TaskService;
+
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,7 +20,7 @@ public class TaskController {
 
     @GetMapping()
     public String getAll(Model model) {
-        model.addAttribute("tasksList", taskServiceImpl.findAll());
+        model.addAttribute("tasksList", taskServiceImpl.findAllOrderById());
         return "task/list";
     }
 
@@ -29,7 +30,8 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String createNewTask(@ModelAttribute Task task) {
+    public String createNewTask(@ModelAttribute Task task, @SessionAttribute User user) {
+        task.setUser(user);
         var savedTask = taskServiceImpl.add(task);
         return "redirect:/tasks";
     }
@@ -53,7 +55,8 @@ public class TaskController {
     }
 
     @PostMapping("/update")
-    public String updateTask(@RequestBody Task task) {
+    public String updateTask(@RequestBody Task task, @SessionAttribute User user) {
+        task.setUser(user);
         taskServiceImpl.update(task);
         return "redirect:/tasks";
     }
@@ -66,11 +69,7 @@ public class TaskController {
 
     @GetMapping("/updateStatus/{id}/{status}")
     public String updateStatus(@PathVariable long id, @PathVariable boolean status, Model model) {
-        var isUpdated = taskServiceImpl.updateStatus(id, status);
-        if (!isUpdated) {
-            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
-            return "errors/404";
-        }
+        taskServiceImpl.updateStatus(id, status);
         return "redirect:/tasks";
     }
 }
