@@ -8,10 +8,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = "user")
+@ToString
 @EqualsAndHashCode(of = "id")
 @Entity
-@Table(name = "priorities")
+@Table(name = "priority")
 public class Priority {
 
     @Id
