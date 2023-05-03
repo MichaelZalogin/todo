@@ -85,6 +85,7 @@
                 <tr>
                     <th scope="col" class="col-id">ID</th>
                     <th scope="col" class="col-name">Name</th>
+                    <th scope="col" class="col-priority">Priority</th>
                     <th scope="col" class="col-created">Created</th>
                     <th scope="col" class="col-status">Status</th>
                     <th scope="col" class="col-author">Author</th>
@@ -96,6 +97,7 @@
 
                     <td th:text="${task.id}"/>
                     <td th:text="${task.name}">
+                    <td th:text="${task.priority.id}">
                     <td th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}"/>
 
                     <td>

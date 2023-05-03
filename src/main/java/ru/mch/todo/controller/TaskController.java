@@ -7,69 +7,72 @@ import org.springframework.web.bind.annotation.*;
 import ru.mch.todo.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.entity.User;
+import ru.mch.todo.service.PriorityService;
 import ru.mch.todo.service.TaskService;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private TaskService taskServiceImpl;
+    private TaskService taskServiceImp;
+
+    private PriorityService priorityServiceImp;
 
     @GetMapping()
     public String getAll(Model model) {
-        model.addAttribute("tasksList", taskServiceImpl.findAllOrderById());
+        model.addAttribute("tasksList", taskServiceImp.findAllOrderById());
         return "task/list";
     }
 
     @GetMapping("/create")
-    public String getCreationPage() {
+    public String getCreationPage(Model model) {
+        model.addAttribute("priorities", priorityServiceImp.findAll());
         return "task/create";
     }
 
     @PostMapping("/create")
     public String createNewTask(@ModelAttribute Task task, @SessionAttribute User user) {
         task.setUser(user);
-        var savedTask = taskServiceImpl.add(task);
+        var savedTask = taskServiceImp.add(task);
         return "redirect:/tasks";
     }
 
     @GetMapping("/completed")
     public String getCompletedTasks(Model model) {
-        model.addAttribute("completedList", taskServiceImpl.findStatusTasks(true));
+        model.addAttribute("completedList", taskServiceImp.findStatusTasks(true));
         return "task/completedList";
     }
 
     @GetMapping("/current")
     public String getCurrentTasks(Model model) {
-        model.addAttribute("currentList", taskServiceImpl.findStatusTasks(false));
+        model.addAttribute("currentList", taskServiceImp.findStatusTasks(false));
         return "task/currentList";
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public Task getById(@PathVariable long id, Model model) {
-        return taskServiceImpl.findById(id).orElseThrow(() -> new NotFoundException("Error"));
+        return taskServiceImp.findById(id).orElseThrow(() -> new NotFoundException("Error"));
     }
 
     @PostMapping("/update")
     public String updateTask(@RequestBody Task task, @SessionAttribute User user) {
         task.setUser(user);
-        taskServiceImpl.update(task);
+        taskServiceImp.update(task);
         return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id) {
-        taskServiceImpl.deleteById(id);
+        taskServiceImp.deleteById(id);
         return "redirect:/tasks";
     }
 
     @GetMapping("/updateStatus/{id}/{status}")
     public String updateStatus(@PathVariable long id, @PathVariable boolean status, Model model) {
-        taskServiceImpl.updateStatus(id, status);
+        taskServiceImp.updateStatus(id, status);
         return "redirect:/tasks";
     }
+
 }

@@ -84,6 +84,13 @@
                           placeholder="Введите заголовок задачи"></textarea>
             </div>
             <div class="mb-3">
+                <label for="priority"><b>Приоритет</b></label>
+                <select class="form-control" id="priority" name="priority">
+                    <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="description" class="form-label"><b>Описание</b></label>
                 <textarea class="form-control" id="description" name="description" rows="12"
                           placeholder="Опишите задачу"></textarea>

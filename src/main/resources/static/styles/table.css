@@ -9,11 +9,15 @@
 }
 
 .col-name {
-    width: 300px;
+    width: 280px;
+}
+
+.col-priority {
+    width: 50px;
 }
 
 .col-created {
-    width: 180px;
+    width: 150px;
 }
 
 .col-status {
