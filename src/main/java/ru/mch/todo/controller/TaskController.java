@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mch.todo.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.entity.User;
+import ru.mch.todo.service.CategoryService;
 import ru.mch.todo.service.PriorityService;
 import ru.mch.todo.service.TaskService;
 
@@ -19,6 +20,8 @@ public class TaskController {
 
     private PriorityService priorityServiceImp;
 
+    private CategoryService categoryServiceImp;
+
     @GetMapping()
     public String getAll(Model model) {
         model.addAttribute("tasksList", taskServiceImp.findAllOrderById());
@@ -28,6 +31,7 @@ public class TaskController {
     @GetMapping("/create")
     public String getCreationPage(Model model) {
         model.addAttribute("priorities", priorityServiceImp.findAll());
+        model.addAttribute("categories", categoryServiceImp.findAll());
         return "task/create";
     }
 

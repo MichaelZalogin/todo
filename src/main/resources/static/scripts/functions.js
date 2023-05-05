@@ -62,3 +62,7 @@ $('.close-modal').click(function () {
     let modal = $('#taskEditDialog');
     modal.modal('hide');
 });
+
+$(document).ready(function () {
+    $('.chosen-select').chosen();
+});

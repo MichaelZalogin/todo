@@ -11,11 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 public class PriorityServiceImp implements PriorityService {
 
-    private PriorityRepository priorityRepository;
+    private PriorityRepository priorityRepositoryImp;
 
     @Override
     public List<Priority> findAll() {
-        return priorityRepository.findAll();
+        return priorityRepositoryImp.findAll();
     }
 
 }
