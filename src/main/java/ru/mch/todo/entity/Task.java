@@ -41,11 +41,12 @@ public class Task {
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "task_category",
-            joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
-    )
-    private Set<Category> categories = new HashSet<>();
+    //    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "task_category",
+//            joinColumns = {@JoinColumn(name = "task_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+//    )
+//    private Set<Category> categories = new HashSet<>();
+
 }

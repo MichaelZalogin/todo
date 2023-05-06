@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.mch.todo.entity.Priority;
 import ru.mch.todo.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.entity.User;
@@ -20,7 +21,7 @@ public class TaskController {
 
     private PriorityService priorityServiceImp;
 
-    private CategoryService categoryServiceImp;
+//    private CategoryService categoryServiceImp;
 
     @GetMapping()
     public String getAll(Model model) {
@@ -31,7 +32,7 @@ public class TaskController {
     @GetMapping("/create")
     public String getCreationPage(Model model) {
         model.addAttribute("priorities", priorityServiceImp.findAll());
-        model.addAttribute("categories", categoryServiceImp.findAll());
+//        model.addAttribute("categories", categoryServiceImp.findAll());
         return "task/create";
     }
 
@@ -78,5 +79,4 @@ public class TaskController {
         taskServiceImp.updateStatus(id, status);
         return "redirect:/tasks";
     }
-
 }
