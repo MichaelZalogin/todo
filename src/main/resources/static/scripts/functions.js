@@ -66,3 +66,8 @@ $('.close-modal').click(function () {
 $(document).ready(function () {
     $('.chosen-select').chosen();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    var chosenInput = document.querySelector('.chosen-search-input.default');
+    chosenInput.value = 'Свой текст'; // Замените 'Выберите варианты' на свой текст
+});

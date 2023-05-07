@@ -1,6 +1,7 @@
 package ru.mch.todo.entity;
 
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,11 +42,11 @@ public class Task {
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "task_category",
-            joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+            joinColumns = {@JoinColumn(name = "task")},
+            inverseJoinColumns = {@JoinColumn(name = "category")}
     )
     private Set<Category> categories = new HashSet<>();
 

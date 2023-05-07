@@ -15,6 +15,7 @@
     box-sizing: border-box;
     border-radius: 7px;
     min-height: 31px;
+    width: 1297px;
 }
 
 .chosen-container .chosen-drop {
@@ -269,14 +270,16 @@
     line-height: normal;
     border-radius: 0;
     width: 25px;
+
 }
 
+/*Элементы списка*/
 .chosen-container-multi .chosen-choices li.search-choice {
     position: relative;
     margin: 3px 5px 3px 0;
     padding: 3px 20px 3px 5px;
     border: 1px solid #aaa;
-    max-width: 100%;
+    max-width: max-content;
     border-radius: 3px;
     background-color: #eeeeee;
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), to(#eee));

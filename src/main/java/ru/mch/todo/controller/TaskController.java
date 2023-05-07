@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.mch.todo.entity.Category;
 import ru.mch.todo.entity.Priority;
 import ru.mch.todo.exceptions.NotFoundException;
 import ru.mch.todo.entity.Task;
@@ -11,6 +12,9 @@ import ru.mch.todo.entity.User;
 import ru.mch.todo.service.CategoryService;
 import ru.mch.todo.service.PriorityService;
 import ru.mch.todo.service.TaskService;
+
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -21,7 +25,7 @@ public class TaskController {
 
     private PriorityService priorityServiceImp;
 
-//    private CategoryService categoryServiceImp;
+    private CategoryService categoryServiceImp;
 
     @GetMapping()
     public String getAll(Model model) {
@@ -32,14 +36,18 @@ public class TaskController {
     @GetMapping("/create")
     public String getCreationPage(Model model) {
         model.addAttribute("priorities", priorityServiceImp.findAll());
-//        model.addAttribute("categories", categoryServiceImp.findAll());
+        model.addAttribute("categories", categoryServiceImp.findAll());
         return "task/create";
     }
 
     @PostMapping("/create")
-    public String createNewTask(@ModelAttribute Task task, @SessionAttribute User user) {
+    public String createNewTask(@ModelAttribute Task task, @SessionAttribute User user,
+                                @RequestParam("category.id") List<Long> categoriesId) {
         task.setUser(user);
+        task.setCategories(categoryServiceImp.getCategoriesById(categoriesId));
         var savedTask = taskServiceImp.add(task);
+        int d = 3;
+        int a = d + 2;
         return "redirect:/tasks";
     }
 

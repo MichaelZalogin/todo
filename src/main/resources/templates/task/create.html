@@ -85,15 +85,19 @@
             <textarea class="form-control" id="name" name="name" rows="1"
                       placeholder="Введите заголовок задачи"></textarea>
         </div>
-
+        <p>
+            <label for="name" class="form-label"><b>Категории</b></label>
         <div class="chosen-container">
-            <select id="my-select" name="category" class="chosen-select" multiple>
-                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+            <select id="my-select" name="category.id" class="chosen-select" multiple>
+                <!--                        th:text="${category.name}" th:name="${category.id}">-->
+                <!--                </option>-->
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                        th:name="${category.id}">>
                 </option>
             </select>
         </div>
+        </p>
         <script src="/scripts/functions.js"></script>
-
         <div class="mb-3">
             <label for="priority"><b>Приоритет</b></label>
             <select class="form-control" id="priority" name="priority.id">
