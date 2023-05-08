@@ -42,7 +42,7 @@ public class Task {
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "task_category",
             joinColumns = {@JoinColumn(name = "task")},

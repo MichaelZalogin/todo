@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.repository.TaskRepository;
-
 import java.util.List;
 import java.util.Optional;
 
