@@ -46,8 +46,6 @@ public class TaskController {
         task.setUser(user);
         task.setCategories(categoryServiceImp.getCategoriesById(categoriesId));
         var savedTask = taskServiceImp.add(task);
-        int d = 3;
-        int a = d + 2;
         return "redirect:/tasks";
     }
 
@@ -65,7 +63,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Task getById(@PathVariable long id, Model model) {
+    public Task getById(@PathVariable long id) {
         return taskServiceImp.findById(id).orElseThrow(() -> new NotFoundException("Error"));
     }
 

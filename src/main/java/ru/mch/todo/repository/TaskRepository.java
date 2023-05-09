@@ -67,7 +67,7 @@ public class TaskRepository {
      */
     public Optional<Task> findById(Long id) {
         return crudRepository.optional(
-                "FROM Task WHERE id = :fId", Task.class,
+                "SELECT t FROM Task t JOIN FETCH t.categories WHERE t.id = :fId ", Task.class,
                 Map.of("fId", id)
         );
     }
