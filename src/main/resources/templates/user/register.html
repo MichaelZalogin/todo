@@ -98,6 +98,14 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="timezone" class="form-label"><b>Временная зона</b></label>
+                        <select class="form-control" id="timezone" name="timezone">
+                            <option th:each="timezone : ${timezones}" th:text="${timezone.ID}">
+                            </option>
+                        </select>
+                    </div>
+
                     <div class="col-5">
                         <div class="row">
                             <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/}">Отмена</a></div>

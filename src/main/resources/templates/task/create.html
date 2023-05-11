@@ -89,8 +89,6 @@
             <label for="name" class="form-label"><b>Категории</b></label>
         <div class="chosen-container">
             <select id="my-select" name="category.id" class="chosen-select" multiple>
-                <!--                        th:text="${category.name}" th:name="${category.id}">-->
-                <!--                </option>-->
                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
                         th:name="${category.id}">>
                 </option>
@@ -101,7 +99,7 @@
         <div class="mb-3">
             <label for="priority"><b>Приоритет</b></label>
             <select class="form-control" id="priority" name="priority.id">
-                <option th:each="priority : ${priorities}" th:value="${priority.id}" th:text="${priority.name}">
+                <option th:each="priority : ${priorities}" th:text="${priority.id}" th:text="${priority.name}">
                 </option>
             </select>
         </div>

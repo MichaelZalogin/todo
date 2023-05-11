@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.mch.todo.entity.User;
+import ru.mch.todo.service.DataServiceImp;
 import ru.mch.todo.service.UserServiceImp;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,9 +19,11 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private UserServiceImp userServiceImp;
+    private DataServiceImp dataServiceImp;
 
     @GetMapping("/register")
-    public String getRegistrationPage() {
+    public String getRegistrationPage(Model model) {
+        model.addAttribute("timezones", dataServiceImp.getAllTimeZone());
         return "user/register";
     }
 

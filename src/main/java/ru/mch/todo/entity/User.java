@@ -17,6 +17,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_zone")
+    private String timezone;
+
     @Column(name = "name")
     private String name;
 

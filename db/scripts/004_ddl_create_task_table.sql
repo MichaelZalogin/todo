@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS task
     id          SERIAL PRIMARY KEY,
     name        TEXT NOT NULL,
     description TEXT,
-    created     TIMESTAMP,
+    created     TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     done        BOOLEAN,
     user_id     INT  NOT NULL REFERENCES todo_user (id),
     priority_id INT REFERENCES priority (id)
