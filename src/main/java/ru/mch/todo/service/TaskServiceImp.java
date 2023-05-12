@@ -55,7 +55,7 @@ public class TaskServiceImp implements TaskService {
     public List<Task> findAllWithTimeZone(User user) {
         List<Task> tasks = taskRepository.findAllOrderById();
         for (Task task : tasks) {
-            task.setCreated(task.getCreatedTimeZone(user.getTimezone()));
+            task.setCreated(task.getCreatedTimeZone());
         }
         return tasks;
     }

@@ -24,8 +24,8 @@ public class TaskController {
     private CategoryService categoryServiceImp;
 
     @GetMapping()
-    public String getAll(Model model, @SessionAttribute User user) {
-        model.addAttribute("tasksList", taskServiceImp.findAllWithTimeZone(user));
+    public String getAll(Model model) {
+        model.addAttribute("tasksList", taskServiceImp.findAllOrderById());
         return "task/list";
     }
 

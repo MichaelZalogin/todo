@@ -52,9 +52,9 @@ public class Task {
     )
     private Set<Category> categories = new HashSet<>();
 
-    public LocalDateTime getCreatedTimeZone(String userZone) {
+    public LocalDateTime getCreatedTimeZone() {
         String defaultTimeZone = ZoneId.systemDefault().toString();
         ZonedDateTime utcTimeZone = ZonedDateTime.of(created, ZoneId.of(defaultTimeZone));
-        return utcTimeZone.withZoneSameInstant(ZoneId.of(userZone)).toLocalDateTime();
+        return utcTimeZone.withZoneSameInstant(ZoneId.of(user.getTimezone())).toLocalDateTime();
     }
 }
