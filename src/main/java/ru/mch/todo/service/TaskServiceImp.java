@@ -2,7 +2,6 @@ package ru.mch.todo.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.mch.todo.entity.Category;
 import ru.mch.todo.entity.Task;
 import ru.mch.todo.entity.User;
 import ru.mch.todo.repository.TaskRepository;
@@ -49,14 +48,5 @@ public class TaskServiceImp implements TaskService {
     @Override
     public void updateStatus(Long id, boolean status) {
         taskRepository.updateStatus(id, status);
-    }
-
-    @Override
-    public List<Task> findAllWithTimeZone(User user) {
-        List<Task> tasks = taskRepository.findAllOrderById();
-        for (Task task : tasks) {
-            task.setCreated(task.getCreatedTimeZone());
-        }
-        return tasks;
     }
 }

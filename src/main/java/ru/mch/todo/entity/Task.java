@@ -1,8 +1,6 @@
 package ru.mch.todo.entity;
 
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
-
 import java.time.ZonedDateTime;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -44,7 +42,7 @@ public class Task {
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "task_category",
             joinColumns = {@JoinColumn(name = "task")},

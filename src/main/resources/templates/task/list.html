@@ -98,10 +98,7 @@
                     <td th:text="${task.id}"/>
                     <td th:text="${task.name}">
                     <td th:text="${task.priority.name}">
-<!--                    <td th:text="${#temporals.format(task.getCreatedTimeZone(), 'dd-MM-yyyy HH:mm')}"/>-->
-                    <td th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}"/>
-                    <!--                    <td th:text="${#temporals.format(task.getCreatedTimeZone(user), 'dd-MM-yyyy HH:mm')}"/>-->
-
+                    <td th:text="${#temporals.format(task.getCreatedTimeZone(), 'dd-MM-yyyy HH:mm')}"/>
                     <td>
               <span th:if="${task.done}">
                         <i class="bi bi-check-square"></i>

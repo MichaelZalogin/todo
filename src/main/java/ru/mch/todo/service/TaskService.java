@@ -22,6 +22,4 @@ public interface TaskService {
 
     void updateStatus(Long id, boolean status);
 
-    List<Task> findAllWithTimeZone(User user);
-
 }

@@ -41,7 +41,7 @@ public class TaskController {
                                 @RequestParam("category.id") List<Long> categoriesId) {
         task.setUser(user);
         task.setCategories(categoryServiceImp.getCategoriesById(categoriesId));
-        var savedTask = taskServiceImp.add(task);
+        taskServiceImp.add(task);
         return "redirect:/tasks";
     }
 
@@ -77,7 +77,7 @@ public class TaskController {
     }
 
     @GetMapping("/updateStatus/{id}/{status}")
-    public String updateStatus(@PathVariable long id, @PathVariable boolean status, Model model) {
+    public String updateStatus(@PathVariable long id, @PathVariable boolean status) {
         taskServiceImp.updateStatus(id, status);
         return "redirect:/tasks";
     }
