@@ -3,8 +3,10 @@ package ru.mch.todo.entity;
 import lombok.*;
 import org.springframework.context.annotation.Lazy;
 
+import java.time.ZonedDateTime;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,4 +52,9 @@ public class Task {
     )
     private Set<Category> categories = new HashSet<>();
 
+    public LocalDateTime getCreatedTimeZone(String userZone) {
+        String defaultTimeZone = ZoneId.systemDefault().toString();
+        ZonedDateTime utcTimeZone = ZonedDateTime.of(created, ZoneId.of(defaultTimeZone));
+        return utcTimeZone.withZoneSameInstant(ZoneId.of(userZone)).toLocalDateTime();
+    }
 }
