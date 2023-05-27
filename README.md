@@ -41,13 +41,13 @@ MVC REST API приложение. Данное веб-приложение представляет собой сайт, где поль
 * JQuery;
 * Bootstrap 5;
 * HTML5;
-* CSS;
+* CSS.
 
 ## Требования к окружению
 
 * Java 17;
 * PostgreSQL 15.1;
-* Apache Maven 3.8.4;
+* Apache Maven 3.8.4.
 
 ## Запуск
 
@@ -96,6 +96,7 @@ CREATE DATABASE todo;
 Michael Zalogin
 
 https://t.me/RuntoJun
+
 zaloginmiha@gmail.com
 
 +79111480757
