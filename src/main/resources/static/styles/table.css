@@ -4,6 +4,10 @@
     vertical-align: middle;
 }
 
+.table-bordered {
+    background: #e0e0e0;
+}
+
 .col-id {
     width: 50px;
 }

@@ -20,10 +20,10 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
           integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
           crossorigin="anonymous"></script>
-
   <title>Вход</title>
 </head>
-<body>
+
+<body th:background="@{/images/bg.jpg}" th:width="1920">
 <div class="container-fluid p-0">
   <!--    Навигация-->
   <nav class="navbar navbar-expand-xl navbar-light" style="background-color: #e0e0e0">
@@ -83,7 +83,7 @@
           </div>
           <div class="mb-3">
             <label for="login" class="form-label"><b>Логин</b></label>
-            <input type="login" class="form-control" id="login" name="login" placeholder="login" required>
+            <input type="login" class="form-control" id="login" name="login" required>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label"><b>Пароль</b></label>

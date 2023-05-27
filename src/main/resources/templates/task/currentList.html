@@ -12,6 +12,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="/styles/navbar.css" rel="stylesheet" type="text/css">
     <link href="/styles/table.css" rel="stylesheet" type="text/css">
+    <link href="/styles/body.css" rel="stylesheet" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>
@@ -26,7 +27,7 @@
 
     <title>Текущие задачи</title>
 </head>
-<body>
+<body class="custom-body">
 <div class="container-fluid p-0">
 
     <!--    Навигация-->
@@ -112,16 +113,16 @@
                     <td>
               <span th:if="${task.done}">
                         <a class="btn btn-danger w-50"
-                           th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${!task.done})}">Возобновить</a>
+                           th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${!task.done})}">Complete</a>
                         </span>
                         <span th:if="${!task.done}">
                   <a class="btn btn-success w-50"
-                     th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${!task.done})}">Выполнить</a>
+                     th:href="@{/tasks/updateStatus/{id}/{status}(id=${task.id}, status=${!task.done})}">Resume</a>
               </span>
 
-                        <button id="edit-task" type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#taskEditDialog" th:data-taskId="${task.id}"><i class="fas fa-edit"></i>edit
-                        </button>
+                    <button id="edit-task" type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#taskEditDialog" th:data-taskId="${task.id}"><i class="fas fa-edit"></i>Edit
+                    </button>
                     </td>
                 </tr>
                 </tbody>
@@ -129,18 +130,18 @@
             </p>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="collapse multi-collapse show" id="multiCollapse1">
-                    <div class="card card-body">
-                        This is some placeholder content for a horizontal collapse. It's hidden by default and shown
-                        when triggered.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!--        <div class="row">-->
+    <!--            <div class="col">-->
+    <!--                <div class="collapse multi-collapse show" id="multiCollapse1">-->
+    <!--                    <div class="card card-body">-->
+    <!--                        This is some placeholder content for a horizontal collapse. It's hidden by default and shown-->
+    <!--                        when triggered.-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
 
-        <div class="modal fade" id="taskEditDialog" tabindex="-1" role="dialog" aria-labelledby="taskEditDialogLabel"
+    <div class="modal fade" id="taskEditDialog" tabindex="-1" role="dialog" aria-labelledby="taskEditDialogLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
