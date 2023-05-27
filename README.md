@@ -32,11 +32,9 @@ MVC REST API приложение. ƒанное веб-приложение представл€ет собой сайт, где поль
 ## “ехнологии
 
 * Java 17 LTS;
-* Spring boot;
+* Spring boot (Thymeleaf/WEB/Test starter)
 * PostgreSQL 15;
 * Hibernate 5;
-* Apache Tomcat 9;
-* Thymeleaf;
 * Log4j;
 * Maven;
 * Liquibase;
